@@ -96,20 +96,13 @@ Route::delete('detergent/delete/{id}',[DetergentController::class,'destroy'])->n
 
 
 //rider-side route
-Route::prefix('/riderapp')->group(function(){
+    Route::prefix('/riderapp')->group(function(){
     
     Route::get('/login', [RiderController::class, 'login'])->name('login');
     Route::post('/login', [RiderController::class, 'authenticate']);
-    
     Route::get('/dashboard', [RiderController::class, 'dashboard']);
-
     Route::put('/update-order', [OrderController::class, 'update']);
 
-    Route::group(['middleware'=> 'rider'], function(){
-        
-        
-    });
-   
 });
 
 Route::get('/rider/bookings/pending', [RiderController::class, 'pending']);
@@ -119,7 +112,6 @@ Route::get('/rider/bookings', [RiderController::class, 'pending']);
 
 Route::get('/rider/dashboard', [RiderController::class, 'dashboard']);
 Route::get('/rider/transaction-history', [RiderController::class, 'history']);
-// Route::get('/rider/bookings/{category?}', [RiderController::class, 'bookings']);
 Route::get('/rider/login', [RiderController::class, 'login']);
 Route::put('rider/update-order/{order}', [OrderController::class, 'update_status']);
 Route::put('/rider/update-weight/{order}', [OrderController::class, 'update_weight']);

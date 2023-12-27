@@ -13,7 +13,16 @@ use Illuminate\Support\Facades\Auth;
 class RiderController extends Controller
 {
     public function dashboard(){
-        return view('rider.dashboard');
+        $completed_orders = Order::where('status', 'complete')->count();
+        $new_orders = Order::where('status', 'pending')->orWhere('status', 'pick up')->count();
+        $in_progress = Order::where('status', 'delivery')->count();
+
+        return view('rider.dashboard', 
+        [
+            'completed_orders' => $completed_orders,
+            'new_orders' => $new_orders,
+            'in_progress' => $in_progress
+        ]);
     }
 
     public function store(Request $request) {
