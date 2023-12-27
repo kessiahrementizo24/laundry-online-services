@@ -71,7 +71,16 @@ class RiderController extends Controller
             $order->detergent = Detergent::find($order->detergent_id);
         }
         return view('rider.bookings.pick-up', ['orders' => $orders]);
-        
+    }
+
+    public function process() {
+        $orders = Order::where('status', 'process')->get();
+        foreach($orders as $order) {
+            $order->user = User::find($order->user_id);
+            $order->fabric = Fabric::find($order->fabric_id);
+            $order->detergent = Detergent::find($order->detergent_id);
+        }
+        return view('rider.bookings.process', ['orders' => $orders]);
     }
 
     public function delivery() {

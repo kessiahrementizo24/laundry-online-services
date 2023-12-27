@@ -71,6 +71,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 Route::get('admin/dashboard',[AdminDashboardController::class,'index'])->name('admin.dashboard');
 Route::get('admin/order',[AdminDashboardController::class,'order'])->name('admin.order');
 Route::put('admin/update-order',[OrderController::class,'update']);
+Route::put('/admin/update-order/{order}',[OrderController::class,'update_status']);
 Route::get('admin/detergent',[AdminDashboardController::class, 'detergent'])->name('admin.detergent');
 Route::get('admin/transaction-history',[AdminDashboardController::class, 'history']);
 
@@ -108,6 +109,7 @@ Route::delete('detergent/delete/{id}',[DetergentController::class,'destroy'])->n
 Route::get('/rider/bookings/pending', [RiderController::class, 'pending']);
 Route::get('/rider/bookings/pick-up', [RiderController::class, 'pick_up']);
 Route::get('/rider/bookings/delivery', [RiderController::class, 'delivery']);
+Route::get('/rider/bookings/process', [RiderController::class, 'process']);
 Route::get('/rider/bookings', [RiderController::class, 'pending']);
 
 Route::get('/rider/dashboard', [RiderController::class, 'dashboard']);

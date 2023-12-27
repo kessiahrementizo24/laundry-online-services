@@ -82,6 +82,9 @@
                 <a href="/rider/bookings/pick-up">
                     <button type="button" class="btn mx-1 btn-secondary">Pick-up</button>
                 </a> 
+                <a href="/rider/bookings/process">
+                    <button type="button" class="btn mx-1 btn-secondary">Process</button>
+                </a> 
                 <a href="/rider/bookings/delivery">
                     <button type="button" class="btn btn-secondary">Delivery</button>
                 </a> 

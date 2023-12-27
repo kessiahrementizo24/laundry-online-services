@@ -80,10 +80,10 @@
                     <button type="button" class="btn btn-secondary">New orders</button>
                 </a> 
                 <a href="/rider/bookings/pick-up">
-                    <button type="button" class="btn mx-1 btn-primary">Pick-up</button>
+                    <button type="button" class="btn mx-1 btn-secondary">Pick-up</button>
                 </a> 
                 <a href="/rider/bookings/process">
-                    <button type="button" class="btn mx-1 btn-secondary">Process</button>
+                    <button type="button" class="btn mx-1 btn-primary">Process</button>
                 </a> 
                 <a href="/rider/bookings/delivery">
                     <button type="button" class="btn btn-secondary">Delivery</button>
@@ -96,7 +96,6 @@
                             <th>Bookings No.</th>
                             <th>Name</th>
                             <th>Tota amount</th>
-                            <th>Weight</th>
                             <th>Actions </th>
                         </tr>
                     </thead>
@@ -112,27 +111,10 @@
                                 <td>{{ $order->id }}</td>
                                 <td>{{ $order->user->name }}</td>
                                 <td>{{ $order->total_amount }}</td>
-                                <td>
-                                    <form action="/rider/update-weight/{{$order->id}}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="input-group">
-                                            <input type="text" name="weight" class="form-control" value="{{$order->weight}}">
-                                            @error('weight')
-                                                <p class="text-danger"> {{$message}} </p>
-                                            @enderror
-                                            <button class="btn btn-primary ml-2">Update</button>
-                                        </div>
-                                    </form>
-                                </td>
+                                
                                 <td class="d-flex">
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#viewStatusModal{{$order->id}}">View Details</button>
-                                    <form action="/rider/update-order/{{$order->id}}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status" value="process">
-                                        <button class="btn btn-primary mr-2 mx-1" type="submit">Proceed to process</button>
-                                    </form>
+                                    <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#viewStatusModal{{$order->id}}">View Details</button>
+                                    <button class="btn btn-secondary" disabled>Being Washed: Check back shortly</button>
                                     {{-- <button class="btn btn-primary" onclick="updateData({{$order}})" data-bs-toggle="modal" data-bs-target="#editStatus">Edit</button> --}}
                                 </td>
                             </tr>

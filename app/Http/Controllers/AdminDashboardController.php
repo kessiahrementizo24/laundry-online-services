@@ -29,18 +29,18 @@ class AdminDashboardController extends Controller
         // $orders = Order::where('user_id', auth()->user()->id)->latest()->get();
         $pendingOrders = Order::where('status', 'pending')->get();
         $this->getData($pendingOrders);
+        $processOrders = Order::where('status', 'process')->get();
+        $this->getData($processOrders);
         $pickUpOrders = Order::where('status', 'pick up')->get();
         $this->getData($pickUpOrders);
         $deliveryOrders = Order::where('status', 'delivery')->get();
         $this->getData($deliveryOrders);
-        $completeOrders = Order::where('status', 'complete')->get();
-        $this->getData($completeOrders);
         return view('admin.order', 
             [
                 'pickUpOrders' => $pickUpOrders,
                 'pendingOrders' => $pendingOrders,
                 'deliveryOrders' => $deliveryOrders,
-                'completeOrders' => $completeOrders,
+                'processOrders' => $processOrders,
             ]);
     }
 
