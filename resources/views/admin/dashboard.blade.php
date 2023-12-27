@@ -60,9 +60,10 @@
                                 <li><h3 class="email-sa-admin"></h3></li>
                                 <li>
                                     <form action="/logout" id="adminLogoutForm" method="POST">@csrf
-                                        <a class="dropdown-item">
+                                        {{-- <a class="dropdown-item">
                                             Logout
-                                        </a>
+                                        </a> --}}
+                                        <button type="submit" class="dropdown-item">Logout</button>
                                     </form>
                                 </li>
                             </ul>
@@ -96,7 +97,7 @@
                     <div class="col-md-4">
                         <div class="p-3 bg-white shadow p-3 d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">720</h3>
+                                <h3 class="fs-2"> {{$new_orders}} </h3>
                                 <p class="fs-5">New Orders</p>
                             </div>
                             <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
@@ -106,7 +107,7 @@
                     <div class="col-md-4">
                         <div class="p-3 bg-white shadow p-3 d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">4920</h3>
+                                <h3 class="fs-2"> {{$in_progress}} </h3>
                                 <p class="fs-5">In Progress</p>
                             </div>
                             <i
@@ -117,7 +118,7 @@
                     <div class="col-md-4">
                         <div class="p-3 bg-white shadow p-3 d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">3899</h3>
+                                <h3 class="fs-2"> {{$completed_orders}} </h3>
                                 <p class="fs-5">Completed</p>
                             </div>
                             <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>

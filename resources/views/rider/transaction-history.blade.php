@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"/>
@@ -21,11 +20,11 @@
                    <h4 class="mb-0 text-center fs-6">Laundry Services</h4></div>
             <div class="list-group list-group-flush my-3">
 
-                <a href="/rider/dashboard" class="list-group-item list-group-item-action bg-transparent text-gray active">
+                <a href="dashboard" class="list-group-item list-group-item-action bg-transparent text-gray fw-bold">
                     <i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                <a href="/rider/bookings" class="list-group-item list-group-item-action bg-transparent text-primary fw-bold">
+                <a href="bookings" class="list-group-item list-group-item-action bg-transparent text-gray fw-bold">
                     <i class="fa fa-book me-2"></i>Bookings</a>
-                <a href="/rider/transaction-history" class="list-group-item list-group-item-action bg-transparent text-gray fw-bold">
+                <a href="transaction-history" class="list-group-item list-group-item-action bg-transparent text-primary active">
                     <i class="fa fa-book me-2"></i>Transaction history</a>
 
             </div>
@@ -35,10 +34,10 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light py-4 px-4" style="background-image: url('/admin-css/img/bg.jpg');">
+            <nav class="navbar navbar-expand-lg navbar-light py-4 px-4" >
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left text-gray fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0 text-lightgray">BOOKINGS</h2>
+                    <h2 class="fs-2 m-0 text-lightgray">Transaction History</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -75,17 +74,6 @@
                     
 
             </nav>
-            <div class="btn-group ms-5 mt-5" role="group" aria-label="Basic example">
-                <a href="/rider/bookings/pending">
-                    <button type="button" class="btn btn-secondary">New orders</button>
-                </a> 
-                <a href="/rider/bookings/pick-up">
-                    <button type="button" class="btn mx-1 btn-secondary">Pick-up</button>
-                </a> 
-                <a href="/rider/bookings/delivery">
-                    <button type="button" class="btn btn-primary">Delivery</button>
-                </a> 
-            </div>
 
             <main class="order-details">
                 <table class="table" >
@@ -93,66 +81,28 @@
                         <tr>
                         <th>Bookings No.</th>
                         <th>Name</th>
-                        <th>Total amount</th>
-                        <th> Actions</th>
+                        <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @if (count($orders) == 0)
-                            <tr>
-                                <td colspan="5" class="text-center">No data found.</td>
-                            </tr>
-                        @endif
+
                         @foreach ($orders as $order)
-                            
+                        <tbody>
                             <tr>
                                 <td>{{ $order->id }}</td>
                                 <td>{{ $order->user->name }}</td>
-                                <td>{{ $order->total_amount }}</td>
-                                <td class="d-flex">
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#viewStatusModal{{$order->id}}">View Details</button>
-                                    <form action="/rider/update-order/{{$order->id}}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status" value="complete">
-                                        <button class="btn btn-primary mr-2 mx-1" type="submit">Complete</button>
-                                    </form>
-                                    {{-- <button class="btn btn-primary" onclick="updateData({{$order}})" data-bs-toggle="modal" data-bs-target="#editStatus">Edit</button> --}}
-                                </td>
+                                <td>{{ $order->status }}</td>
                             </tr>
-                        <div class="modal fade" id="viewStatusModal{{$order->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Booking status</h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Name: {{$order->user->name}}
-                                    <div class="row">
-                                        <div class="col-6">Detergent
-                                            {{$order->detergent->detergent_name}}
-                                        </div>
-                                        <div class="col-6">Facbric
-                                            {{$order->fabric->fabric_name}}
+                        </tbody>
 
-                                        </div>
-                                    </div>
-                                    Weight {{$order->weight}}
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         @endforeach
-                    </tbody>
-                </table>
+                    </table>
             </main>
+        </div>
     </div>
     <!-- /#page-content-wrapper -->
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var el = document.getElementById("wrapper");
         var toggleButton = document.getElementById("menu-toggle");
@@ -160,9 +110,6 @@
         toggleButton.onclick = function () {
             el.classList.toggle("toggled");
         };
-
-       
-
     </script>
 </body>
 

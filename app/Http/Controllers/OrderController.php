@@ -47,4 +47,20 @@ class OrderController extends Controller
         return back();
     }
 
+    public function update_status(Order $order, Request $request) {
+        $order->status = $request->status;
+        $order->update();
+        return back();
+    }
+
+    public function update_weight(Order $order, Request $request) {
+        $data = $request->validate([
+            'weight' => 'required'
+        ]);
+        $order->weight = $request->weight;
+        $order->total_amount = $request->weight * 250 + 50;
+        $order->update();
+        return back();
+    }
+
 }

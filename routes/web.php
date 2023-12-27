@@ -45,6 +45,7 @@ Route::get('/', function () {
 // });
 
 
+
 //admin login
 Route::prefix('admin')->name('admin.')->group(function(){
 
@@ -101,7 +102,6 @@ Route::prefix('/riderapp')->group(function(){
     Route::post('/login', [RiderController::class, 'authenticate']);
     
     Route::get('/dashboard', [RiderController::class, 'dashboard']);
-    Route::get('/bookings', [RiderController::class, 'bookings'])->name('riderapp.bookings');
 
     Route::put('/update-order', [OrderController::class, 'update']);
 
@@ -112,13 +112,17 @@ Route::prefix('/riderapp')->group(function(){
    
 });
 
-Route::get('/bookings/pending', [RiderController::class, 'pending']);
-Route::get('/bookings/pick-up', [RiderController::class, 'pick_up']);
-Route::get('/bookings/delivery', [RiderController::class, 'delivery']);
+Route::get('/rider/bookings/pending', [RiderController::class, 'pending']);
+Route::get('/rider/bookings/pick-up', [RiderController::class, 'pick_up']);
+Route::get('/rider/bookings/delivery', [RiderController::class, 'delivery']);
+Route::get('/rider/bookings', [RiderController::class, 'pending']);
 
 Route::get('/rider/dashboard', [RiderController::class, 'dashboard']);
-Route::get('/rider/bookings/{category?}', [RiderController::class, 'bookings']);
+Route::get('/rider/transaction-history', [RiderController::class, 'history']);
+// Route::get('/rider/bookings/{category?}', [RiderController::class, 'bookings']);
 Route::get('/rider/login', [RiderController::class, 'login']);
+Route::put('rider/update-order/{order}', [OrderController::class, 'update_status']);
+Route::put('/rider/update-weight/{order}', [OrderController::class, 'update_weight']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/register',[AuthController::class, 'register']);

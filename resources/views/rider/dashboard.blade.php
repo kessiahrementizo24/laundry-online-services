@@ -24,6 +24,8 @@
                     <i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                 <a href="bookings" class="list-group-item list-group-item-action bg-transparent text-gray fw-bold">
                     <i class="fa fa-book me-2"></i>Bookings</a>
+                <a href="transaction-history" class="list-group-item list-group-item-action bg-transparent text-gray fw-bold">
+                    <i class="fa fa-book me-2"></i>Transaction history</a>
 
             </div>
         </div>

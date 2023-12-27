@@ -17,9 +17,14 @@
   </tr>
   </thead>
   
-  @foreach ($orders as $order)
   
   <tbody>
+    @if (count($orders) == 0)
+      <tr>
+        <td colspan="7" class="text-center">No orders found. <a href="/user/book">Book now!</a> </td>
+      </tr>
+    @endif
+  @foreach ($orders as $order)
   <tr>
     <td> {{ $order->id }} </td>
     <td> {{ $order->user->name }} </td>
@@ -31,9 +36,10 @@
       <button class="btn btm-sm btn-primary" style="font-size : 12px;height:40px;width:90px" onclick="changeData({{ $order }})" data-bs-toggle="modal" data-bs-target="#statusModal">View Status</button>
     </td>
   </tr>
+  @endforeach
+
   </tbody>
  
-  @endforeach
 </table>
 </main>
 
@@ -97,17 +103,17 @@
             case 'pending':
                 document.getElementById('status1').classList.add('current-item')
                 break;
-            case 'pickup':
+            case 'pick up':
                 document.getElementById('status2').classList.add('current-item')
                 break;
             case 'process':
                 document.getElementById('status3').classList.add('current-item')
                 break;
-            case 'delivered':
+            case 'delivery':
                 document.getElementById('status4').classList.add('current-item')
                 break;
             case 'complete':
-                document.getElementById('status5').classList.add('current-item')
+                // document.getElementById('status5').classList.add('current-item')
                 break;
         }
     }

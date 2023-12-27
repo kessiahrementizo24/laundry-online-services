@@ -12,18 +12,44 @@ class AdminDashboardController extends Controller
 {
     public function index() 
     {
-        return view('admin.dashboard');
+
+        $completed_orders = Order::where('status', 'complete')->count();
+        $new_orders = Order::where('status', 'pending')->orWhere('status', 'pick up')->count();
+        $in_progress = Order::where('status', 'delivery')->count();
+
+        return view('admin.dashboard', 
+        [
+            'completed_orders' => $completed_orders,
+            'new_orders' => $new_orders,
+            'in_progress' => $in_progress
+        ]);
     }
     public function order()
     {
         // $orders = Order::where('user_id', auth()->user()->id)->latest()->get();
-        $orders = Order::latest()->get();
+        $pendingOrders = Order::where('status', 'pending')->get();
+        $this->getData($pendingOrders);
+        $pickUpOrders = Order::where('status', 'pick up')->get();
+        $this->getData($pickUpOrders);
+        $deliveryOrders = Order::where('status', 'delivery')->get();
+        $this->getData($deliveryOrders);
+        $completeOrders = Order::where('status', 'complete')->get();
+        $this->getData($completeOrders);
+        return view('admin.order', 
+            [
+                'pickUpOrders' => $pickUpOrders,
+                'pendingOrders' => $pendingOrders,
+                'deliveryOrders' => $deliveryOrders,
+                'completeOrders' => $completeOrders,
+            ]);
+    }
+
+    function getData($orders) {
         foreach($orders as $order) {
             $order->user = User::find($order->user_id);
             $order->fabric = Fabric::find($order->fabric_id);
             $order->detergent = Detergent::find($order->detergent_id);
         }
-        return view('admin.order', ['orders' => $orders]);
     }
     
     public function detergent() 
@@ -36,7 +62,13 @@ class AdminDashboardController extends Controller
     }
 
     public function history() {
-        return view('admin.transaction-history', ['orders' => Order::where('status', 'completed')->get()]);
+        $orders = Order::where('status', 'complete')->get();
+        foreach($orders as $order) {
+            $order->user = User::find($order->user_id);
+            $order->fabric = Fabric::find($order->fabric_id);
+            $order->detergent = Detergent::find($order->detergent_id);
+        }
+        return view('admin.transaction-history', ['orders' =>  $orders]);
     }
 
 }

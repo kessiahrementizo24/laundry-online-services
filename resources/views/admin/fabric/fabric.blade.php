@@ -84,6 +84,11 @@
                       </tr>
                     </thead>
                     <tbody class="table table-bordered border-dark">
+                        @if (count($fabric) == 0)
+                            <tr>
+                                <td colspan="4" class="text-center">No data found.</td>
+                            </tr>
+                        @endif
                        <?php $i=1; ?>
                        @foreach ($fabric as $data)
                            <tr>

@@ -27,43 +27,66 @@ class RiderController extends Controller
         return back();
     }
 
-    public function bookings(?string $category = null) {
-        if($category) {
-            $orders = Order::where('status', $category)->get();
-        }
-        else {
-            $orders = Order::all();
-        }
+    // public function bookings(?string $category = null) {
+    //     if($category) {
+    //         $orders = Order::where('status', $category)->get();
+    //     }
+    //     else {
+    //         $orders = Order::all();
+    //     }
 
+    //     foreach($orders as $order) {
+    //         $order->user = User::find($order->user_id);
+    //         $order->fabric = Fabric::find($order->fabric_id);
+    //         $order->detergent = Detergent::find($order->detergent_id);
+    //     }
+    //     return view('rider.bookings.pending', ['orders' => $orders]);
+    // }
+
+    public function pending() {
+        $orders = Order::where('status', 'pending')->get();
         foreach($orders as $order) {
             $order->user = User::find($order->user_id);
             $order->fabric = Fabric::find($order->fabric_id);
             $order->detergent = Detergent::find($order->detergent_id);
         }
         return view('rider.bookings.pending', ['orders' => $orders]);
-    }
-
-    public function pending() {
-        return view('rider.bookings.pending', ['orders' => Order::where('status', 'pending')->get()]);
 
     }
    
     public function pick_up() {
-        return view('rider.bookings.process', ['orders' => Order::where('status', 'pick up')->get()]);
+        $orders = Order::where('status', 'pick up')->get();
+        foreach($orders as $order) {
+            $order->user = User::find($order->user_id);
+            $order->fabric = Fabric::find($order->fabric_id);
+            $order->detergent = Detergent::find($order->detergent_id);
+        }
+        return view('rider.bookings.pick-up', ['orders' => $orders]);
         
     }
 
     public function delivery() {
-        return view('rider.bookings.delivery', ['orders' => Order::where('status', 'deliver')->get()]);
-        
+        $orders = Order::where('status', 'delivery')->get();
+        foreach($orders as $order) {
+            $order->user = User::find($order->user_id);
+            $order->fabric = Fabric::find($order->fabric_id);
+            $order->detergent = Detergent::find($order->detergent_id);
+        }
+        return view('rider.bookings.delivery', ['orders' => $orders]);
     }
 
     public function login() {
         return view ('rider.login');
     }
 
-    public function login_Handler () 
-    { 
-        return view ('riderapp.login');
+    public function history() {
+        $orders = Order::where('status', 'complete')->get();
+        foreach($orders as $order) {
+            $order->user = User::find($order->user_id);
+            $order->fabric = Fabric::find($order->fabric_id);
+            $order->detergent = Detergent::find($order->detergent_id);
+        }
+        return view('rider.transaction-history', ['orders' => $orders]);
     }
+
 }
